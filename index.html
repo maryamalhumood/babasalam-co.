@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baba Salam & Co.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #001F3D;
+            color: #ffffff;
+        }
+
+        header {
+            background-color: #001F3D;
+            color: #ffffff;
+            text-align: center;
+            padding: 50px 20px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        nav {
+            background-color: #ffffff;
+            text-align: center;
+            padding: 15px 0;
+            color: #001F3D;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+        }
+
+        nav a {
+            color: #001F3D;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 0 30px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #004080;
+        }
+
+        .container {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .container h2 {
+            font-size: 36px;
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container p {
+            font-size: 18px;
+            margin: 20px 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .signin-form, .announcement-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .signin-form input,
+        .signin-form button,
+        .announcement-form input,
+        .announcement-form textarea,
+        .announcement-form button {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 5px;
+            font-family: 'Roboto', sans-serif;
+            outline: none;
+            border: 1px solid #ccc;
+        }
+
+        .signin-form button, .announcement-form button {
+            background-color: #001F3D;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .signin-form button:hover, .announcement-form button:hover {
+            background-color: #004080;
+        }
+
+        footer {
+            background-color: #001F3D;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .welcome-message {
+            font-size: 20px;
+            color: white;
+            margin-top: 20px;
+        }
+
+        .auth-toggle {
+            font-size: 18px;
+            cursor: pointer;
+            color: #001F3D;
+            text-decoration: underline;
+            margin-top: 20px;
+        }
+
+        .announcement-section {
+            margin-top: 40px;
+        }
+
+        .announcement {
+            background-color: #ffffff;
+            color: #001F3D;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-password {
+            font-size: 14px;
+            color: #001F3D;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 10px;
+        }
+
+        /* Style for the sign-in header */
+        .signin-header {
+            font-size: 32px;
+            color: #001F3D;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Baba Salam & Co.</h1>
+        <p>"Family is the compass that guides us; love is the journey we share."</p>
+    </header>
+
+    <nav>
+        <a href="#" id="homeBtn">Home</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <div class="language-toggle" id="languageToggle" onclick="toggleLanguage()">🌍</div>
+
+    <div class="container">
+        <!-- Sign-In Section -->
+        <div id="signInSection">
+            <div class="signin-header">Sign In to Your Account</div> <!-- Added header for the sign-in section -->
+            <p>Enter your credentials to access your account.</p>
+            <div class="signin-form" id="signinForm">
+                <input type="email" id="signinEmail" placeholder="Email">
+                <input type="password" id="signinPassword" placeholder="Password">
+                <button onclick="signIn()">Sign In</button>
+                <div class="auth-toggle" onclick="toggleAuthForm()">Don't have an account? Sign Up</div>
+                <div class="reset-password" onclick="resetPassword()">Forgot Password?</div>
+            </div>
+        </div>
+
+        <!-- Sign-Up Form (Hidden Initially) -->
+        <div class="signin-form" id="signupForm" style="display: none;">
+            <input type="email" id="signupEmail" placeholder="Email">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <button onclick="signUp()">Sign Up</button>
+            <div class="auth-toggle" onclick="toggleAuthForm()">Already have an account? Sign In</div>
+        </div>
+
+        <!-- Welcome message after user logs in -->
+        <div class="welcome-message" id="welcomeMessage"></div>
+
+        <!-- Announcement Section (Only shown after Sign In) -->
+        <div class="announcement-section" id="announcementSection" style="display: none;">
+            <h2>Create an Announcement</h2>
+            <div class="announcement-form">
+                <textarea id="announcementText" rows="4" placeholder="Write your announcement here..."></textarea>
+                <button onclick="postAnnouncement()">Post Announcement</button>
+            </div>
+
+            <div id="announcements">
+                <!-- Announcements will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section" id="about">
+        <h2>About Baba Salam & Co.</h2>
+        <p>This website was created by Maryam Alhumood in 2024 as a special way to connect with her family and share moments together. It serves as a virtual space for updates, memories, and connection.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Baba Salam & Co. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let currentLanguage = 'en';
+
+        // Toggle between English and Arabic
+        function toggleLanguage() {
+            if (currentLanguage === 'en') {
+                currentLanguage = 'ar';
+                document.documentElement.setAttribute('dir', 'rtl');
+                document.querySelector('header h1').textContent = 'بابا سلام & شركاه';
+                document.querySelector('header p').textContent = 'مرحبًا بكم في مركز العائلة لدينا، حيث يتم مشاركة الذكريات وتستمر اللحظات إلى الأبد.';
+                document.querySelectorAll('nav a')[0].textContent = 'الصفحة الرئيسية';
+                document.querySelectorAll('nav a')[1].textContent = 'حول';
+                document.querySelector('.container h2').textContent = 'تسجيل الدخول';
+                document.querySelector('.container p').textContent = 'أدخل بياناتك للوصول إلى حسابك.';
+                document.querySelector('.signin-form button').textContent = 'تسجيل الدخول';
+                document.querySelector('.signup-form button').textContent = 'التسجيل';
+            } else {
+                currentLanguage = 'en';
+                document.documentElement.setAttribute('dir', 'ltr');
+                document.querySelector('header h1').textContent = 'Baba Salam & Co.';
+                document.querySelector('header p').textContent = '"Family is the compass that guides us; love is the journey we share."';
+                document.querySelectorAll('nav a')[0].textContent = 'Home';
+                document.querySelectorAll('nav a')[1].textContent = 'About';
+                document.querySelector('.container h2').textContent = 'Sign In';
+                document.querySelector('.container p').textContent = 'Enter your credentials to access your account.';
+                document.querySelector('.signin-form button').textContent = 'Sign In';
+                document.querySelector('.signup-form button').textContent = 'Sign Up';
+            }
+        }
+
+        // Toggle between Sign-In and Sign-Up forms
+        function toggleAuthForm() {
+            let signinForm = document.getElementById('signinForm');
+            let signupForm = document.getElementById('signupForm');
+            
+            if (signinForm.style.display === 'none') {
+                signinForm.style.display = 'block';
+                signupForm.style.display = 'none';
+            } else {
+                signinForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            }
+        }
+
+        // Sign Up Function
+        function signUp() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            
+            if (email && password) {
+                localStorage.setItem('email', email);
+                localStorage.setItem('password', password);
+                alert('Account created successfully!');
+                toggleAuthForm();
+            } else {
+                alert('Please enter an email and password.');
+            }
+        }
+
+        // Sign In Function
+        function signIn() {
+            const email = document.getElementById('signinEmail').value;
+            const password = document.getElementById('signinPassword').value;
+            const savedEmail = localStorage.getItem('email');
+            const savedPassword = localStorage.getItem('password');
+            
+            if (email === savedEmail && password === savedPassword) {
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${email}!`;
+                document.getElementById('signInSection').style.display = 'none'; // Hide sign-in section
+                document.getElementById('announcementSection').style.display = 'block'; // Show announcement section
+                loadAnnouncements(); // Load saved announcements
+            } else {
+                alert('Incorrect email or password.');
+            }
+        }
+
+        // Reset Password Function
+        function resetPassword() {
+            alert('Password reset functionality is not implemented yet.');
+        }
+
+        // Post Announcement
+        function postAnnouncement() {
+            const announcementText = document.getElementById('announcementText').value;
+            if (announcementText) {
+                let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+                announcements.push(announcementText);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                loadAnnouncements();
+                document.getElementById('announcementText').value = ''; // Clear input
+            } else {
+                alert('Please write something to announce!');
+            }
+        }
+
+        // Load Announcements from Local Storage
+        function loadAnnouncements() {
+            const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+            const announcementsContainer = document.getElementById('announcements');
+            announcementsContainer.innerHTML = ''; // Clear existing announcements
+            
+            announcements.forEach(announcement => {
+                const announcementDiv = document.createElement('div');
+                announcementDiv.classList.add('announcement');
+                announcementDiv.textContent = announcement;
+                announcementsContainer.appendChild(announcementDiv);
+            });
+        }
+
+        // Display Welcome Message and Announcement Section if Logged In
+        window.onload = function() {
+            const savedEmail = localStorage.getItem('email');
+            if (savedEmail) {
+                document.getElementById('welcomeMessage').textContent = `Welcome back, ${savedEmail}!`;
+                document.getElementById('signInSection').style.display = 'none'; // Hide sign-in section
+                document.getElementById('announcementSection').style.display = 'block'; // Show announcement section
+                loadAnnouncements(); // Load saved announcements
+            }
+        }
+    </script>
+</body>
+</html>
