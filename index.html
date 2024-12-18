@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baba Salam & Co. – The Family Empire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #001524;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        header, footer {
+            background-color: #01374c;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        nav {
+            background-color: #014051;
+            text-align: center;
+            padding: 15px 0;
+        }
+        nav a {
+            color: #7ec8e3;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 15px;
+            text-transform: uppercase;
+        }
+        nav a:hover {
+            color: #4ea8de;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        /* Buttons */
+        button {
+            padding: 10px 20px;
+            background-color: #014451;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #03728a;
+        }
+
+        /* Forms and Modals */
+        .modal-content {
+            background-color: #f8f8f8;
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 350px;
+            margin: auto;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Gallery */
+        .gallery {
+            padding: 20px;
+            background-color: #002733;
+        }
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .gallery-item {
+            width: 100%;
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+        }
+
+        /* Cropping Modal */
+        .crop-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .crop-modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .crop-modal img {
+            max-width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            nav a {
+                font-size: 0.9rem;
+                margin: 0 8px;
+            }
+            button {
+                padding: 8px 15px;
+            }
+        }
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.4rem;
+            }
+            nav a {
+                font-size: 0.8rem;
+            }
+            .gallery-item {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Baba Salam & Co.</h1>
+        <p>The Family Empire</p>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#updates">Announcements</a>
+        <a href="#" onclick="openModal()">Log In</a>
+    </nav>
+
+    <!-- Home Section -->
+    <div id="home" class="container">
+        <h2>Welcome to Baba Salam & Co.</h2>
+        <p>Where stars align for the coolest family in the galaxy.</p>
+    </div>
+
+    <!-- Family Gallery Section -->
+    <div id="gallery" class="gallery">
+        <h2>Family Gallery</h2>
+        <button onclick="document.getElementById('imageInput').click()">Upload Image</button>
+        <input type="file" id="imageInput" style="display:none" accept="image/*" onchange="prepareCrop(event)">
+        <div class="gallery-container" id="galleryContainer"></div>
+    </div>
+
+    <!-- Announcements Section -->
+    <div id="updates" class="container">
+        <h2>Family Announcements</h2>
+        <form id="announcementForm">
+            <input type="text" id="announcementInput" placeholder="Enter your announcement" required>
+            <button type="submit">Post Announcement</button>
+        </form>
+        <ul id="updateList"></ul>
+    </div>
+
+    <!-- Cropping Modal -->
+    <div class="crop-modal" id="cropModal" style="display:none;">
+        <div class="crop-modal-content">
+            <img id="cropImage" alt="Crop">
+            <button onclick="cropImage()">Crop & Upload</button>
+            <button onclick="closeCropModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Baba Salam & Co. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+        const cropModal = document.getElementById('cropModal');
+        const cropImage = document.getElementById('cropImage');
+        const galleryContainer = document.getElementById('galleryContainer');
+        const updateList = document.getElementById('updateList');
+        let cropper;
+
+        // Load stored images and announcements
+        window.onload = function() {
+            const storedImages = JSON.parse(localStorage.getItem('images')) || [];
+            const storedAnnouncements = JSON.parse(localStorage.getItem('announcements')) || [];
+
+            storedImages.forEach(src => addImageToGallery(src));
+            storedAnnouncements.forEach(text => addAnnouncement(text));
+        };
+
+        // Prepare the cropping modal
+        function prepareCrop(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                cropImage.src = e.target.result;
+                cropModal.style.display = 'flex';
+
+                cropper = new Cropper(cropImage, {
+                    aspectRatio: 1,
+                    viewMode: 2,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function cropImage() {
+            const croppedCanvas = cropper.getCroppedCanvas();
+            const croppedImageSrc = croppedCanvas.toDataURL();
+
+            addImageToGallery(croppedImageSrc);
+
+            // Save to localStorage
+            const storedImages = JSON.parse(localStorage.getItem('images')) || [];
+            storedImages.push(croppedImageSrc);
+            localStorage.setItem('images', JSON.stringify(storedImages));
+
+            closeCropModal();
+        }
+
+        function closeCropModal() {
+            cropper.destroy();
+            cropModal.style.display = 'none';
+        }
+
+        function addImageToGallery(src) {
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'gallery-item';
+            imgDiv.style.backgroundImage = `url(${src})`;
+            galleryContainer.appendChild(imgDiv);
+        }
+
+        // Announcements
+        document.getElementById('announcementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const announcementText = document.getElementById('announcementInput').value;
+
+            addAnnouncement(announcementText);
+
+            // Save to localStorage
+            const storedAnnouncements = JSON.parse(localStorage.getItem('announcements')) || [];
+            storedAnnouncements.push(announcementText);
+            localStorage.setItem('announcements', JSON.stringify(storedAnnouncements));
+
+            document.getElementById('announcementInput').value = '';
+        });
+
+        function addAnnouncement(text) {
+            const li = document.createElement('li');
+            li.textContent = text;
+            updateList.appendChild(li);
+        }
+    </script>
+</body>
+</html>
